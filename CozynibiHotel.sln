@@ -3,15 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CozynibiHotel.API", "CozynibiHotel.API\CozynibiHotel.API.csproj", "{ADA3307A-AF7B-4642-A905-CE8E24B6911C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CozynibiHotel.API", "CozynibiHotel.API\CozynibiHotel.API.csproj", "{ADA3307A-AF7B-4642-A905-CE8E24B6911C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CozynibiHotel.Core", "CozynibiHotel.Core\CozynibiHotel.Core.csproj", "{5E64CC74-E5DD-4752-9FAA-BD6D98D99C33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CozynibiHotel.Core", "CozynibiHotel.Core\CozynibiHotel.Core.csproj", "{5E64CC74-E5DD-4752-9FAA-BD6D98D99C33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CozynibiHotel.Infrastructure", "CozynibiHotel.Infrastructure\CozynibiHotel.Infrastructure.csproj", "{A8ECF305-6CD4-4AF3-B066-3D6917CF25E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CozynibiHotel.Infrastructure", "CozynibiHotel.Infrastructure\CozynibiHotel.Infrastructure.csproj", "{A8ECF305-6CD4-4AF3-B066-3D6917CF25E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CozynibiHotel.Services", "CozynibiHotel.Services\CozynibiHotel.Services.csproj", "{C3FE5552-75A9-456C-8EA5-133E783DE292}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CozynibiHotel.Services", "CozynibiHotel.Services\CozynibiHotel.Services.csproj", "{C3FE5552-75A9-456C-8EA5-133E783DE292}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HUG.CRUD", "HUG.CRUD\HUG.CRUD.csproj", "{A358ED34-DD66-46BC-8800-02FC8A2F1941}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HUG.CRUD", "HUG.CRUD\HUG.CRUD.csproj", "{A358ED34-DD66-46BC-8800-02FC8A2F1941}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4028E5FB-0FCA-45DF-AEE9-C55B7FF33C00}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
