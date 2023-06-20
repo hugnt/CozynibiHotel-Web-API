@@ -16,5 +16,7 @@ namespace CozynibiHotel.Infrastructure.Data
         }
 
         public DbSet<Language> Languages { get; set; }
+        public DbSet<RoomCategory> RoomCategories { get; set; }
+        public DbSet<Room> Rooms { get; set; }
     }
 }

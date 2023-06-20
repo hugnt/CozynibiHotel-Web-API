@@ -23,7 +23,9 @@ namespace CozynibiHotel.Infrastructure.ServiceExtension
             });
 
             services.AddScoped<ILanguageRepository, LanguageRepository>();
-            
+            services.AddScoped<IRoomCategoryRepository, RoomCategoryRepository>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
+
             return services;
         }
     }

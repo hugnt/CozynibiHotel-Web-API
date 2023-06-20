@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CozynibiHotel.Core\CozynibiHotel.Core.csproj" />
     <ProjectReference Include="..\CozynibiHotel.Infrastructure\CozynibiHotel.Infrastructure.csproj" />
     <ProjectReference Include="..\CozynibiHotel.Services\CozynibiHotel.Services.csproj" />

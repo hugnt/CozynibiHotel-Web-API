@@ -15,6 +15,12 @@ namespace CozynibiHotel.Core.Helper
         {
             CreateMap<Language, LanguageDto>();
             CreateMap<LanguageDto, Language>();
+
+            CreateMap<RoomCategory, RoomCategoryDto>();
+            CreateMap<RoomCategoryDto, RoomCategory>();
+
+            CreateMap<Room, RoomDto>();
+            CreateMap<RoomDto, Room>();
         }
         
     }
