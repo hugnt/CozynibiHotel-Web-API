@@ -9,8 +9,11 @@ using System.Threading.Tasks;
 
 namespace CozynibiHotel.Core.Interfaces
 {
-    public interface IRoomCategoryRepository : IGenericRepository<RoomCategory>
+    public interface IRefeshTokenRepository : IGenericRepository<RefeshToken>
     {
-        ICollection<RoomCategoryDto> GetAll();
+        bool IsValid(string refeshToken);
+        bool IsExists(string refeshToken);
+        RefeshToken GetRefeshToken(string refeshToken);
+
     }
 }

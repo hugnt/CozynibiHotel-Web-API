@@ -17,7 +17,7 @@ namespace CozynibiHotel.Core.Models
         public double? Hight { get; set; }
 
         [Column("bed_size")]
-        public double? BedSize { get; set; }
+        public string? BedSize { get; set; }
 
         [Column("room_rate")]
         public double? RoomRate { get; set; }

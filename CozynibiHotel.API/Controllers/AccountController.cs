@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using CozynibiHotel.Core.Interfaces;
-using CozynibiHotel.Core.Models;
+﻿using CozynibiHotel.Core.Models;
 using CozynibiHotel.Core.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,44 +8,44 @@ namespace CozynibiHotel.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LanguageController : Controller
+    public class AccountController : Controller
     {
-        private readonly ILanguageService _languageService;
+        private readonly IAccountService _accountService;
 
-        public LanguageController(ILanguageService languageService)
+        public AccountController(IAccountService accountService)
         {
-            _languageService = languageService;
+            _accountService = accountService;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Language>))]
-        public IActionResult GetLanguages()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Account>))]
+        public IActionResult GetAccounts()
         {
-            var languages = _languageService.GetLanguages();
+            var accounts = _accountService.GetAccounts();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return Ok(languages);
+            return Ok(accounts);
         }
 
-        [HttpGet("{languageId}")]
-        [ProducesResponseType(200, Type = typeof(Language))]
+        [HttpGet("{accountId}")]
+        [ProducesResponseType(200, Type = typeof(Account))]
         [ProducesResponseType(400)]
-        public IActionResult GetLanguage(int languageId)
+        public IActionResult GetAccount(int accountId)
         {
-            var language = _languageService.GetLanguage(languageId);
+            var account = _accountService.GetAccount(accountId);
             if (!ModelState.IsValid) return BadRequest();
-            if (language == null) return NotFound();
-            return Ok(language);
+            if (account == null) return NotFound();
+            return Ok(account);
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult CreateLanguage([FromBody] LanguageDto languageCreate)
+        public IActionResult CreateAccount([FromBody] AccountDto accountCreate)
         {
-            if (languageCreate == null) return BadRequest(ModelState);
+            if (accountCreate == null) return BadRequest(ModelState);
 
-            var res = _languageService.CreateLanguage(languageCreate);
+            var res = _accountService.CreateAccount(accountCreate);
 
             if (res.Status != 201)
             {
@@ -60,16 +58,16 @@ namespace CozynibiHotel.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
-        [HttpPut("{languageId}")]
+        [HttpPut("{accountId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateLanguage(int languageId, [FromBody] LanguageDto updatedLanguage)
+        public IActionResult UpdateAccount(int accountId, [FromBody] AccountDto updatedAccount)
         {
-            if (updatedLanguage == null) return BadRequest(ModelState);
-            if (languageId != updatedLanguage.Id) return BadRequest(ModelState);
+            if (updatedAccount == null) return BadRequest(ModelState);
+            if (accountId != updatedAccount.Id) return BadRequest(ModelState);
 
-            var res = _languageService.UpdateLanguage(languageId, updatedLanguage);
+            var res = _accountService.UpdateAccount(accountId, updatedAccount);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -80,13 +78,13 @@ namespace CozynibiHotel.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{languageId}")]
+        [HttpDelete("{accountId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteLanguage(int languageId)
+        public IActionResult DeleteAccount(int accountId)
         {
-            var res = _languageService.DeleteLanguage(languageId);
+            var res = _accountService.DeleteAccount(accountId);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);

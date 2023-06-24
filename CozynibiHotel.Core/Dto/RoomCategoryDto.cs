@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CozynibiHotel.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace CozynibiHotel.Core.Dto
 {
-    public class RoomCategoryDto
+    public class RoomCategoryDto : RoomCategory
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public double Area { get; set; }
-        public double Hight { get; set; }
-        public double BedSize { get; set; }
-        public double RoomRate { get; set; }
-        public string Description { get; set; }
+        public List<string> Images { get; set; }
+        public RoomCategoryDto()
+        {
+            Images = new List<string>();
+        }
+        
     }
 }

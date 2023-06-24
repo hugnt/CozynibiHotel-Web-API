@@ -1,9 +1,8 @@
-﻿using AutoMapper;
-using CozynibiHotel.Core.Interfaces;
-using CozynibiHotel.Core.Models;
+﻿using CozynibiHotel.Core.Models;
 using CozynibiHotel.Core.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using CozynibiHotel.Services.Interfaces;
 
 namespace CozynibiHotel.API.Controllers
 {
@@ -11,20 +10,18 @@ namespace CozynibiHotel.API.Controllers
     [ApiController]
     public class RoomCategoryController : Controller
     {
-        private readonly IRoomCategoryRepository _roomCategoryRepository;
-        private readonly IMapper _mapper;
+        private readonly IRoomCategoryService _roomCategoryService;
 
-        public RoomCategoryController(IRoomCategoryRepository roomCategoryRepository, IMapper mapper)
+        public RoomCategoryController(IRoomCategoryService roomCategoryService)
         {
-            _roomCategoryRepository = roomCategoryRepository;
-            _mapper = mapper;
+            _roomCategoryService = roomCategoryService;
         }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<RoomCategory>))]
         public IActionResult GetRoomCategories()
         {
-            var roomCategories = _mapper.Map<List<RoomCategoryDto>>(_roomCategoryRepository.GetAll());
+            var roomCategories = _roomCategoryService.GetRoomCategories();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             return Ok(roomCategories);
@@ -35,42 +32,30 @@ namespace CozynibiHotel.API.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetRoomCategory(int roomCategoryId)
         {
-            if (!_roomCategoryRepository.IsExists(roomCategoryId)) return NotFound();
-
-            var roomCategory = _mapper.Map<RoomCategoryDto>(_roomCategoryRepository.GetById(roomCategoryId));
+            var roomCategory = _roomCategoryService.GetRoomCategory(roomCategoryId);
             if (!ModelState.IsValid) return BadRequest();
-
+            if (roomCategory == null) return NotFound();
             return Ok(roomCategory);
         }
 
         [HttpPost]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         public IActionResult CreateRoomCategory([FromBody] RoomCategoryDto roomCategoryCreate)
         {
             if (roomCategoryCreate == null) return BadRequest(ModelState);
 
-            var roomCategories = _roomCategoryRepository.GetAll()
-                            .Where(l => l.Name.Trim().ToLower() == roomCategoryCreate.Name.Trim().ToLower())
-                            .FirstOrDefault();
+            var res = _roomCategoryService.CreateRoomCategory(roomCategoryCreate);
 
-            if (roomCategories != null)
+            if (res.Status != 201)
             {
-                ModelState.AddModelError("", "RoomCategory already exists");
-                return StatusCode(422, ModelState);
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
             }
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var roomCategoryMap = _mapper.Map<RoomCategory>(roomCategoryCreate);
-
-            if (!_roomCategoryRepository.Create(roomCategoryMap))
-            {
-                ModelState.AddModelError("", "Something went wrong while saving");
-                return StatusCode(500, ModelState);
-            }
-
-            return Ok("Successfully created");
+            return StatusCode(res.Status, res.StatusMessage);
         }
 
         [HttpPut("{roomCategoryId}")]
@@ -81,16 +66,14 @@ namespace CozynibiHotel.API.Controllers
         {
             if (updatedRoomCategory == null) return BadRequest(ModelState);
             if (roomCategoryId != updatedRoomCategory.Id) return BadRequest(ModelState);
-            if (!_roomCategoryRepository.IsExists(roomCategoryId)) return NotFound();
-            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var roomCategoryMap = _mapper.Map<RoomCategory>(updatedRoomCategory);
-
-            if (!_roomCategoryRepository.Update(roomCategoryMap))
+            var res = _roomCategoryService.UpdateRoomCategory(roomCategoryId, updatedRoomCategory);
+            if (res.Status != 204)
             {
-                ModelState.AddModelError("", "Something went wrong updating roomCategory");
-                return StatusCode(500, ModelState);
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
             }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             return NoContent();
         }
@@ -101,22 +84,17 @@ namespace CozynibiHotel.API.Controllers
         [ProducesResponseType(404)]
         public IActionResult DeleteRoomCategory(int roomCategoryId)
         {
-            if (!_roomCategoryRepository.IsExists(roomCategoryId)) return NotFound();
-
-            var roomCategoryToDelete = _roomCategoryRepository.GetById(roomCategoryId);
+            var res = _roomCategoryService.DeleteRoomCategory(roomCategoryId);
+            if (res.Status != 204)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+            }
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (!_roomCategoryRepository.Delete(roomCategoryToDelete))
-            {
-                ModelState.AddModelError("", "Something went wrong when deleting roomCategory");
-                return StatusCode(500, ModelState);
-            }
-
             return NoContent();
         }
-
-
 
     }
 }

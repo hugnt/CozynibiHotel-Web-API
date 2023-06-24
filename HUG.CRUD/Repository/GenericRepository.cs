@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace HUG.CRUD.Repository
-{
+{ 
     public abstract class GenericRepository<T> : IGenericRepository<T> where T : BaseModel
     {
         private readonly DbContext _context;
@@ -60,13 +60,14 @@ namespace HUG.CRUD.Repository
         {
             throw new NotImplementedException();
         }
-        public Task<T> GetById_Async(int id)
+        public async Task<T> GetById_Async(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Set<T>().FindAsync(id);
         }
         public Task<bool> Create_Async(T entity)
         {
-            throw new NotImplementedException();
+            _context.AddAsync(entity);
+            return Save_Async();
         }
         public Task<bool> Update_Async(T entity)
         {
@@ -82,9 +83,10 @@ namespace HUG.CRUD.Repository
             throw new NotImplementedException();
         }
 
-        public Task<bool> Save_Async()
+        public async Task<bool> Save_Async()
         {
-            throw new NotImplementedException();
+            int save = await _context.SaveChangesAsync();
+            return save > 0;
         }
 
 

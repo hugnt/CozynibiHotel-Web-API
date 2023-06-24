@@ -13,6 +13,9 @@ namespace CozynibiHotel.Core.Helper
     {
         public MappingProfiles()
         {
+            CreateMap<Account, AccountDto>();
+            CreateMap<AccountDto, Account>();
+
             CreateMap<Language, LanguageDto>();
             CreateMap<LanguageDto, Language>();
 
@@ -21,6 +24,9 @@ namespace CozynibiHotel.Core.Helper
 
             CreateMap<Room, RoomDto>();
             CreateMap<RoomDto, Room>();
+
+            CreateMap<RefeshToken, RefeshTokenDto>();
+            CreateMap<RefeshTokenDto, RefeshToken>();
         }
         
     }

@@ -1,30 +1,29 @@
-﻿using AutoMapper;
-using CozynibiHotel.Core.Interfaces;
-using CozynibiHotel.Core.Models;
+﻿using CozynibiHotel.Core.Models;
 using CozynibiHotel.Core.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using CozynibiHotel.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CozynibiHotel.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class RoomController : Controller
     {
-        private readonly IRoomRepository _roomRepository;
-        private readonly IMapper _mapper;
-
-        public RoomController(IRoomRepository roomRepository, IMapper mapper)
+        private readonly IRoomService _roomService;
+        
+        public RoomController(IRoomService roomService)
         {
-            _roomRepository = roomRepository;
-            _mapper = mapper;
+            _roomService = roomService;
         }
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
         public IActionResult GetRooms()
         {
-            var rooms = _mapper.Map<List<RoomDto>>(_roomRepository.GetAll());
+            var rooms = _roomService.GetRooms();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             return Ok(rooms);
@@ -35,42 +34,30 @@ namespace CozynibiHotel.API.Controllers
         [ProducesResponseType(400)]
         public IActionResult GetRoom(int roomId)
         {
-            if (!_roomRepository.IsExists(roomId)) return NotFound();
-
-            var room = _mapper.Map<RoomDto>(_roomRepository.GetById(roomId));
+            var room = _roomService.GetRoom(roomId);
             if (!ModelState.IsValid) return BadRequest();
-
+            if (room == null) return NotFound();
             return Ok(room);
         }
 
         [HttpPost]
-        [ProducesResponseType(204)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         public IActionResult CreateRoom([FromBody] RoomDto roomCreate)
         {
             if (roomCreate == null) return BadRequest(ModelState);
 
-            var rooms = _roomRepository.GetAll()
-                            .Where(l => l.Name.Trim().ToLower() == roomCreate.Name.Trim().ToLower())
-                            .FirstOrDefault();
+            var res = _roomService.CreateRoom(roomCreate);
 
-            if (rooms != null)
+            if (res.Status != 201)
             {
-                ModelState.AddModelError("", "Room already exists");
-                return StatusCode(422, ModelState);
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
             }
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var roomMap = _mapper.Map<Room>(roomCreate);
-
-            if (!_roomRepository.Create(roomMap))
-            {
-                ModelState.AddModelError("", "Something went wrong while saving");
-                return StatusCode(500, ModelState);
-            }
-
-            return Ok("Successfully created");
+            return StatusCode(res.Status, res.StatusMessage);
         }
 
         [HttpPut("{roomId}")]
@@ -81,16 +68,14 @@ namespace CozynibiHotel.API.Controllers
         {
             if (updatedRoom == null) return BadRequest(ModelState);
             if (roomId != updatedRoom.Id) return BadRequest(ModelState);
-            if (!_roomRepository.IsExists(roomId)) return NotFound();
-            if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var roomMap = _mapper.Map<Room>(updatedRoom);
-
-            if (!_roomRepository.Update(roomMap))
+            var res = _roomService.UpdateRoom(roomId, updatedRoom);
+            if (res.Status != 204)
             {
-                ModelState.AddModelError("", "Something went wrong updating room");
-                return StatusCode(500, ModelState);
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
             }
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             return NoContent();
         }
@@ -101,22 +86,17 @@ namespace CozynibiHotel.API.Controllers
         [ProducesResponseType(404)]
         public IActionResult DeleteRoom(int roomId)
         {
-            if (!_roomRepository.IsExists(roomId)) return NotFound();
-
-            var roomToDelete = _roomRepository.GetById(roomId);
+            var res = _roomService.DeleteRoom(roomId);
+            if (res.Status != 204)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+            }
 
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            if (!_roomRepository.Delete(roomToDelete))
-            {
-                ModelState.AddModelError("", "Something went wrong when deleting room");
-                return StatusCode(500, ModelState);
-            }
-
             return NoContent();
         }
-
-
 
     }
 }

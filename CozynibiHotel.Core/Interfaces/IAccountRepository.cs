@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace CozynibiHotel.Core.Interfaces
 {
-    public interface IRoomCategoryRepository : IGenericRepository<RoomCategory>
+    public interface IAccountRepository : IGenericRepository<Account>
     {
-        ICollection<RoomCategoryDto> GetAll();
+        bool IsExists(AccountDto account);
+        public Account GetAccount(AccountDto account);
     }
 }

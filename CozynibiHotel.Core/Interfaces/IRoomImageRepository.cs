@@ -1,5 +1,4 @@
-﻿using CozynibiHotel.Core.Dto;
-using CozynibiHotel.Core.Models;
+﻿using CozynibiHotel.Core.Models;
 using HUG.CRUD.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace CozynibiHotel.Core.Interfaces
 {
-    public interface IRoomCategoryRepository : IGenericRepository<RoomCategory>
+    public interface IRoomImageRepository : IGenericRepository<RoomImage>
     {
-        ICollection<RoomCategoryDto> GetAll();
+
     }
 }
