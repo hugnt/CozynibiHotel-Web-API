@@ -11,6 +11,7 @@ namespace CozynibiHotel.Services.Interfaces
     public interface IRoomCategoryService
     {
         IEnumerable<RoomCategoryDto> GetRoomCategories();
+        IEnumerable<RoomCategoryDto> SearchRoomCategories(string field, string keyWords);
         RoomCategoryDto GetRoomCategory(int roomCategoryId);
         ResponseModel CreateRoomCategory(RoomCategoryDto roomCategoryCreate);
         ResponseModel UpdateRoomCategory(int roomCategoryId, RoomCategoryDto updatedRoomCategory);

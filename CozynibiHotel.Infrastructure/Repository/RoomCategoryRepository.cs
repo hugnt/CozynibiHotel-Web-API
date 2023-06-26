@@ -47,5 +47,43 @@ namespace CozynibiHotel.Infrastructure.Repository
 
         }
 
+
+        public RoomCategoryDto GetById(int roomCategoryId)
+        {
+            return GetAll().FirstOrDefault(e => e.Id == roomCategoryId);
+        }
+
+        public ICollection<RoomCategoryDto> Search(string field, string keyWords)
+        {
+            if (keyWords == ""||keyWords == "*" || keyWords == null) return GetAll();
+            field = field.ToLower();
+            field = field.Substring(0, 1).ToUpper() + field.Substring(1);
+            keyWords = keyWords.ToLower();
+            if(field == "Isactive")
+            {
+     
+                if (keyWords == "1" || keyWords.Contains("Active") || keyWords == "true")
+                {
+                    return GetAll().Where(e => e.IsActive==true).ToList();
+                }
+                else
+                {
+                    return GetAll().Where(e => e.IsActive == false).ToList();
+                }
+                
+            }
+
+            var res = GetAll()
+            .Where(e => e.GetType().GetProperty(field)?
+            .GetValue(e)?
+            .ToString()?
+            .ToLower()
+            .Contains(keyWords) ?? false)
+            .ToList();
+            if (res.Count() > 0) return res;
+
+            return null;
+        }
+
     }
 }

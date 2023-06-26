@@ -27,6 +27,16 @@ namespace CozynibiHotel.API.Controllers
             return Ok(roomCategories);
         }
 
+        [HttpGet("{field}/{keyWords}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<RoomCategoryDto>))]
+        public IActionResult SearchRoomCategories(string field, string keyWords)
+        {
+            var roomCategories = _roomCategoryService.SearchRoomCategories(field, keyWords);
+            if (!ModelState.IsValid) return BadRequest();
+            if (roomCategories == null) return NotFound();
+            return Ok(roomCategories);
+        }
+
         [HttpGet("{roomCategoryId}")]
         [ProducesResponseType(200, Type = typeof(RoomCategory))]
         [ProducesResponseType(400)]
@@ -95,6 +105,8 @@ namespace CozynibiHotel.API.Controllers
 
             return NoContent();
         }
+
+
 
     }
 }

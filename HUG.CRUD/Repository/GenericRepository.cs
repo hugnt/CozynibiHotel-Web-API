@@ -21,6 +21,21 @@ namespace HUG.CRUD.Repository
         {
             return _context.Set<T>().ToList();
         }
+        public ICollection<T> Search(string field, string keyWords)
+        {
+            field = field.ToLower();
+            field = field.Substring(0, 1).ToUpper() + field.Substring(1);
+            keyWords = keyWords.ToLower();
+            var res = _context.Set<T>().ToList()
+                .Where(e => e.GetType().GetProperty(field)?
+                .GetValue(e)?
+                .ToString()?
+                .ToLower()
+                .Contains(keyWords) ?? false)
+                .ToList();
+            if (res.Count() > 0) return res;
+            return null;
+        }
         public T GetById(int id)
         {
             return _context.Set<T>().Find(id);
@@ -89,6 +104,6 @@ namespace HUG.CRUD.Repository
             return save > 0;
         }
 
-
+        
     }
 }

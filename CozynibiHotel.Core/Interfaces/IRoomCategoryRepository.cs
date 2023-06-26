@@ -12,5 +12,7 @@ namespace CozynibiHotel.Core.Interfaces
     public interface IRoomCategoryRepository : IGenericRepository<RoomCategory>
     {
         ICollection<RoomCategoryDto> GetAll();
+        RoomCategoryDto GetById(int roomCategoryId);
+        ICollection<RoomCategoryDto> Search(string field, string keyWords);
     }
 }

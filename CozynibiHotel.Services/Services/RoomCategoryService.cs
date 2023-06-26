@@ -26,7 +26,7 @@ namespace CozynibiHotel.Services.Services
         public RoomCategoryDto GetRoomCategory(int roomCategoryId)
         {
             if (!_roomCategoryRepository.IsExists(roomCategoryId)) return null;
-            var roomCategory = _mapper.Map<RoomCategoryDto>(_roomCategoryRepository.GetById(roomCategoryId));
+            var roomCategory = _roomCategoryRepository.GetById(roomCategoryId);
             return roomCategory;
         }
         public IEnumerable<RoomCategoryDto> GetRoomCategories()
@@ -75,8 +75,10 @@ namespace CozynibiHotel.Services.Services
             return new ResponseModel(204, "");
         }
 
-        
-
-
+        public IEnumerable<RoomCategoryDto> SearchRoomCategories(string field, string keyWords)
+        {
+            var res = _roomCategoryRepository.Search(field, keyWords);
+            return res;
+        }
     }
 }

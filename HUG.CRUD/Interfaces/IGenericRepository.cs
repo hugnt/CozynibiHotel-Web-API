@@ -13,6 +13,7 @@ namespace HUG.CRUD.Interfaces
         //normal
         T GetById(int id);
         ICollection<T> GetAll();
+        ICollection<T> Search(string field, string keyWords);
         bool IsExists(int id);
         bool Create(T entity);
         bool Update(T entity);
