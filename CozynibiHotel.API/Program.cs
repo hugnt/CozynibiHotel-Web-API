@@ -14,6 +14,7 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ILanguageService, LanguageService>();
 builder.Services.AddScoped<IRoomCategoryService, RoomCategoryService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -49,6 +50,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("HUG_LOCAL");
+
+app.UseStaticFiles();// Add middleware for specify the static files in wwwroot
 
 app.UseAuthentication();
 

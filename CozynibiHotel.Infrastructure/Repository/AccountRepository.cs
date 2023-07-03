@@ -24,7 +24,7 @@ namespace CozynibiHotel.Infrastructure.Repository
         {
             var user = _dbContext.Accounts.SingleOrDefault(a =>
                 a.Username == account.Username &&
-                account.Password == account.Password
+                a.Password == account.Password
             );
             return user != null;
         }
@@ -32,8 +32,7 @@ namespace CozynibiHotel.Infrastructure.Repository
         public Account GetAccount(AccountDto account)
         {
             return _dbContext.Accounts.SingleOrDefault(a =>
-                a.Username == account.Username &&
-                account.Password == account.Password
+                a.Username == account.Username && a.Password == account.Password
             );
         }
     }

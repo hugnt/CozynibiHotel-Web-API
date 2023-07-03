@@ -10,6 +10,6 @@ namespace CozynibiHotel.Core.Interfaces
 {
     public interface IRoomImageRepository : IGenericRepository<RoomImage>
     {
-
+        bool UpdateStatus(int category_id, List<string> lstUpdateImage);
     }
 }

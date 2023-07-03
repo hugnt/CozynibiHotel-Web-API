@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
@@ -15,6 +16,10 @@
     <ProjectReference Include="..\CozynibiHotel.Core\CozynibiHotel.Core.csproj" />
     <ProjectReference Include="..\CozynibiHotel.Infrastructure\CozynibiHotel.Infrastructure.csproj" />
     <ProjectReference Include="..\CozynibiHotel.Services\CozynibiHotel.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

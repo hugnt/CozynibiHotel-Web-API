@@ -1,4 +1,5 @@
-﻿using CozynibiHotel.Core.Interfaces;
+﻿using AutoMapper;
+using CozynibiHotel.Core.Interfaces;
 using CozynibiHotel.Core.Models;
 using CozynibiHotel.Infrastructure.Data;
 using HUG.CRUD.Repository;
@@ -12,10 +13,42 @@ namespace CozynibiHotel.Infrastructure.Repository
 {
     public class RoomImageRepository : GenericRepository<RoomImage>, IRoomImageRepository
     {
-        public RoomImageRepository(AppDbContext dbContext) : base(dbContext)
+        private readonly AppDbContext _dbContext;
+        private readonly IMapper _mapper;
+        public RoomImageRepository(AppDbContext dbContext, IMapper mapper) : base(dbContext)
         {
-
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
+
+        public bool UpdateStatus(int category_id, List<string> lstUpdateImage)
+        {
+            try
+            {
+                var lstRoomImageWithCateId = _dbContext.RoomImages.Where(rc => rc.CategoryId == category_id);
+                foreach (var ri in lstRoomImageWithCateId)
+                {
+                    if (lstUpdateImage.Contains(ri.Image))
+                    {
+                        ri.IsDeleted = false;
+                    }
+                    else
+                    {
+                        ri.IsDeleted = true;
+                    }
+                    _dbContext.RoomImages.Update(ri);
+                    _dbContext.SaveChanges();
+
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
 
     }
 }

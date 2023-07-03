@@ -28,8 +28,9 @@ namespace CozynibiHotel.Infrastructure.ServiceExtension
             services.AddScoped<ILanguageRepository, LanguageRepository>();
             services.AddScoped<IRoomCategoryRepository, RoomCategoryRepository>();
             services.AddScoped<IRoomImageRepository, RoomImageRepository>();
+            services.AddScoped<IRoomEquipmentRepository, RoomEquipmentRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
-
+            services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 
             //Authenization
 

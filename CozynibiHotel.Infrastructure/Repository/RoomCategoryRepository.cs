@@ -25,13 +25,24 @@ namespace CozynibiHotel.Infrastructure.Repository
         public ICollection<RoomCategoryDto> GetAll()
         {
             var roomCategories = new List<RoomCategoryDto>();
+            var queryRCE = from re in _dbContext.RoomEquipments
+                           join e in _dbContext.Equipments
+                           on re.EquipmentId equals e.Id
+                           select new
+                           {
+                               CategoryId = re.CategoryId,
+                               Name = e.Name
+                           };
+
             var groupJoin = from rc in _dbContext.RoomCategories.ToList()
-                            join ri in _dbContext.RoomImages.ToList()
-                            on rc.Id equals ri.CategoryId into rci
+                            join ri in _dbContext.RoomImages.ToList() on rc.Id equals ri.CategoryId into rci
+                            join re in queryRCE on rc.Id equals re.CategoryId into rcei
                             select new 
                             {
                                 RoomCategoryObj = rc,
-                                Images = rci
+                                Images = rci,
+                                Equipments = rcei
+                              
                             };
 
             foreach (var item in groupJoin)
@@ -41,6 +52,11 @@ namespace CozynibiHotel.Infrastructure.Repository
                 {
                     roomCate.Images.Add(img.Image);       
                 }
+                foreach (var equip in item.Equipments)
+                {
+                    roomCate.Equipments.Add(equip.Name);
+                }
+
                 roomCategories.Add(roomCate);
             }
             return roomCategories;

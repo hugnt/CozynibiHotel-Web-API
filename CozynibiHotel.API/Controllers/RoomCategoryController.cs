@@ -3,6 +3,7 @@ using CozynibiHotel.Core.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CozynibiHotel.Services.Interfaces;
+using HUG.CRUD.Services;
 
 namespace CozynibiHotel.API.Controllers
 {
@@ -11,10 +12,12 @@ namespace CozynibiHotel.API.Controllers
     public class RoomCategoryController : Controller
     {
         private readonly IRoomCategoryService _roomCategoryService;
+        private readonly IWebHostEnvironment _environment;
 
-        public RoomCategoryController(IRoomCategoryService roomCategoryService)
+        public RoomCategoryController(IRoomCategoryService roomCategoryService, IWebHostEnvironment environment)
         {
             _roomCategoryService = roomCategoryService;
+            _environment = environment;
         }
 
         [HttpGet]
@@ -51,7 +54,7 @@ namespace CozynibiHotel.API.Controllers
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public IActionResult CreateRoomCategory([FromBody] RoomCategoryDto roomCategoryCreate)
+        public async Task<IActionResult> CreateRoomCategory([FromForm] RoomCategoryDto roomCategoryCreate, [FromForm] List<IFormFile> images)
         {
             if (roomCategoryCreate == null) return BadRequest(ModelState);
 
@@ -61,6 +64,16 @@ namespace CozynibiHotel.API.Controllers
             {
                 ModelState.AddModelError("", res.StatusMessage);
                 return StatusCode(res.Status, ModelState);
+            }
+
+            var folderImage = "images\\accommodation_2";
+            var uploadFile = new UploadFile(_environment.WebRootPath);
+            var resUploadImage = await uploadFile.UploadImage(images, folderImage);
+
+            if (resUploadImage.Status != 200)
+            {
+                ModelState.AddModelError("", resUploadImage.StatusMessage);
+                return StatusCode(resUploadImage.Status, ModelState);
             }
 
             if (!ModelState.IsValid) return BadRequest(ModelState);

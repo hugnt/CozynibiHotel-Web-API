@@ -27,6 +27,9 @@ namespace CozynibiHotel.Core.Helper
 
             CreateMap<RefeshToken, RefeshTokenDto>();
             CreateMap<RefeshTokenDto, RefeshToken>();
+
+            CreateMap<Equipment, EquipmentDto>();
+            CreateMap<EquipmentDto, Equipment>();
         }
         
     }

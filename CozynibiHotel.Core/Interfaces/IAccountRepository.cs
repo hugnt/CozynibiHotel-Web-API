@@ -12,6 +12,6 @@ namespace CozynibiHotel.Core.Interfaces
     public interface IAccountRepository : IGenericRepository<Account>
     {
         bool IsExists(AccountDto account);
-        public Account GetAccount(AccountDto account);
+       Account GetAccount(AccountDto account);
     }
 }
