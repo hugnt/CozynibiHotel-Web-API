@@ -15,6 +15,7 @@ namespace CozynibiHotel.Services.Interfaces
         RoomCategoryDto GetRoomCategory(int roomCategoryId);
         ResponseModel CreateRoomCategory(RoomCategoryDto roomCategoryCreate);
         ResponseModel UpdateRoomCategory(int roomCategoryId, RoomCategoryDto updatedRoomCategory);
+        ResponseModel UpdateRoomCategory(int roomCategoryId, bool isDelete);
         ResponseModel DeleteRoomCategory(int roomCategoryId);
 
     }

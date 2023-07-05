@@ -25,7 +25,7 @@ namespace CozynibiHotel.Infrastructure.Repository
         {
             try
             {
-                var lstRoomImageWithCateId = _dbContext.RoomImages.Where(rc => rc.CategoryId == category_id);
+                var lstRoomImageWithCateId = GetAll().Where(rc => rc.CategoryId == category_id);
                 foreach (var ri in lstRoomImageWithCateId)
                 {
                     if (lstUpdateImage.Contains(ri.Image))
@@ -36,9 +36,7 @@ namespace CozynibiHotel.Infrastructure.Repository
                     {
                         ri.IsDeleted = true;
                     }
-                    _dbContext.RoomImages.Update(ri);
-                    _dbContext.SaveChanges();
-
+                    Update(ri);
                 }
             }
             catch (Exception)

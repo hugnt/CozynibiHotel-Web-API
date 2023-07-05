@@ -28,6 +28,7 @@ namespace CozynibiHotel.Infrastructure.Repository
             var queryRCE = from re in _dbContext.RoomEquipments
                            join e in _dbContext.Equipments
                            on re.EquipmentId equals e.Id
+                           where re.IsDeleted == false
                            select new
                            {
                                CategoryId = re.CategoryId,
@@ -50,7 +51,8 @@ namespace CozynibiHotel.Infrastructure.Repository
                 var roomCate = _mapper.Map<RoomCategoryDto>(item.RoomCategoryObj);
                 foreach (var img in item.Images)
                 {
-                    roomCate.Images.Add(img.Image);       
+                    if(img.IsDeleted == false) roomCate.Images.Add(img.Image);
+
                 }
                 foreach (var equip in item.Equipments)
                 {
@@ -64,7 +66,7 @@ namespace CozynibiHotel.Infrastructure.Repository
         }
 
 
-        public RoomCategoryDto GetById(int roomCategoryId)
+        public RoomCategoryDto GetByIdDto(int roomCategoryId)
         {
             return GetAll().FirstOrDefault(e => e.Id == roomCategoryId);
         }
@@ -99,6 +101,28 @@ namespace CozynibiHotel.Infrastructure.Repository
             if (res.Count() > 0) return res;
 
             return null;
+        }
+
+        public bool SetDelete(int id, bool isDelete)
+        {
+            try
+            {
+                var selectedRecord = _dbContext.RoomCategories.Find(id);
+                if (selectedRecord != null)
+                {
+                    selectedRecord.IsDeleted = isDelete;
+                    selectedRecord.IsActive = false;
+                    Save();
+                }
+                
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            return true;
+            
         }
 
     }

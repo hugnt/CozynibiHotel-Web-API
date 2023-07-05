@@ -37,7 +37,7 @@ namespace CozynibiHotel.Services.Services
         public RoomCategoryDto GetRoomCategory(int roomCategoryId)
         {
             if (!_roomCategoryRepository.IsExists(roomCategoryId)) return null;
-            var roomCategory = _roomCategoryRepository.GetById(roomCategoryId);
+            var roomCategory = _roomCategoryRepository.GetByIdDto(roomCategoryId);
             return roomCategory;
         }
         public IEnumerable<RoomCategoryDto> GetRoomCategories()
@@ -48,6 +48,9 @@ namespace CozynibiHotel.Services.Services
         {
             if (roomCategoryCreate.CreatedBy == 0) roomCategoryCreate.CreatedBy = 1;
             if (roomCategoryCreate.UpdatedBy == 0) roomCategoryCreate.UpdatedBy = 1;
+            roomCategoryCreate.CreatedAt = DateTime.Now;
+            roomCategoryCreate.IsActive = false;
+            roomCategoryCreate.IsDeleted = false;
             var roomCategories = _roomCategoryRepository.GetAll()
                             .Where(l => l.Name.Trim().ToLower() == roomCategoryCreate.Name.Trim().ToLower())
                             .FirstOrDefault();
@@ -74,6 +77,7 @@ namespace CozynibiHotel.Services.Services
                     Image = img,
                     CreatedBy = roomCategoryCreate.CreatedBy,
                     UpdatedBy = roomCategoryCreate.UpdatedBy,
+                    IsDeleted = false
                 };
                 var checkImgExist = _roomImageRepository.GetAll().Any(img => 
                                                                     img.CategoryId== roomImage.CategoryId &&
@@ -111,11 +115,13 @@ namespace CozynibiHotel.Services.Services
                     CategoryId = roomCategoryMap.Id,
                     EquipmentId = checkEquipExist.Id,
                     CreatedBy = roomCategoryCreate.CreatedBy,
-                    UpdatedBy = roomCategoryCreate.UpdatedBy
-                };
+                    UpdatedBy = roomCategoryCreate.UpdatedBy,
+                    IsDeleted = false
+
+              };
                 var checkRoomEquipExist = _roomEquipmentRepository.GetAll().Any(equip =>
                                                                     equip.CategoryId == roomEquipment.CategoryId &&
-                                                                    equip.EquipmentId == roomEquipment.Id);
+                                                                    equip.EquipmentId == roomEquipment.EquipmentId);
                 if (checkRoomEquipExist) continue;
                 if (!_roomEquipmentRepository.Create(roomEquipment))
                 {
@@ -129,20 +135,102 @@ namespace CozynibiHotel.Services.Services
         }
         public ResponseModel UpdateRoomCategory(int roomCategoryId, RoomCategoryDto updatedRoomCategory)
         {
+            if (updatedRoomCategory.CreatedBy == 0) updatedRoomCategory.CreatedBy = 1;
+            if (updatedRoomCategory.UpdatedBy == 0) updatedRoomCategory.UpdatedBy = 1;
+            updatedRoomCategory.UpdatedAt = DateTime.Now;
+
             if (!_roomCategoryRepository.IsExists(roomCategoryId)) return new ResponseModel(404,"Not found");
             var roomCategoryMap = _mapper.Map<RoomCategory>(updatedRoomCategory);
             if (!_roomCategoryRepository.Update(roomCategoryMap))
             {
                 return new ResponseModel(500, "Something went wrong updating roomCategory");
             }
-            if(!_roomImageRepository.UpdateStatus(roomCategoryId, updatedRoomCategory.Images))
+
+            //Images
+            foreach (var img in updatedRoomCategory.Images)
+            {
+                var roomImage = new RoomImage()
+                {
+                    CategoryId = roomCategoryId,
+                    Image = img,
+                    CreatedBy = updatedRoomCategory.CreatedBy,
+                    UpdatedBy = updatedRoomCategory.UpdatedBy,
+                    IsDeleted = false
+                };
+                var checkImgExist = _roomImageRepository.GetAll().Any(img =>
+                                                                    img.CategoryId == roomImage.CategoryId &&
+                                                                    img.Image == roomImage.Image);
+                if (checkImgExist) continue;
+                if (!_roomImageRepository.Create(roomImage))
+                {
+                    return new ResponseModel(500, "Something went wrong while saving images");
+                }
+            }
+            if (!_roomImageRepository.UpdateStatus(roomCategoryId, updatedRoomCategory.Images))
             {
                 return new ResponseModel(500, "Something went wrong updating status of images roomCategory");
+            }
+
+            //Equipments ....
+            foreach (var equip in updatedRoomCategory.Equipments)
+            {
+                //Create || Checking exist
+                var checkEquipExist = _equipmentRepository.GetAll().FirstOrDefault(e =>
+                                      e.Name.Trim().ToLower() == equip.Trim().ToLower());
+                if (checkEquipExist == null)
+                {
+                    var newEquip = new Equipment()
+                    {
+                        Name = equip,
+                        CreatedBy = updatedRoomCategory.CreatedBy,
+                        UpdatedBy = updatedRoomCategory.UpdatedBy,
+                        IsDeleted = false
+                    };
+                    if (!_equipmentRepository.Create(newEquip))
+                    {
+                        return new ResponseModel(500, "Something went wrong while adding new equipment");
+                    }
+                    checkEquipExist = newEquip;
+                }
+
+                //Create relation ship
+                var roomEquipment = new RoomEquipment()
+                {
+                    CategoryId = roomCategoryId,
+                    EquipmentId = checkEquipExist.Id,
+                    CreatedBy = updatedRoomCategory.CreatedBy,
+                    UpdatedBy = updatedRoomCategory.UpdatedBy,
+                    IsDeleted = false
+                };
+                var checkRoomEquipExist = _roomEquipmentRepository.GetAll().Any(equip =>
+                                                                    equip.CategoryId == roomEquipment.CategoryId &&
+                                                                    equip.EquipmentId == roomEquipment.EquipmentId);
+                if (checkRoomEquipExist) continue;
+                if (!_roomEquipmentRepository.Create(roomEquipment))
+                {
+                    return new ResponseModel(500, "Something went wrong while saving images");
+                }
+
+            }
+            if (!_roomEquipmentRepository.UpdateStatus(roomCategoryId, updatedRoomCategory.Equipments))
+            {
+                return new ResponseModel(500, "Something went wrong updating status of Equipments roomCategory");
             }
 
             return new ResponseModel(204, "");
 
         }
+
+
+        public ResponseModel UpdateRoomCategory(int roomCategoryId, bool isDelete)
+        {
+            if(!_roomCategoryRepository.SetDelete(roomCategoryId, isDelete))
+            {
+                return new ResponseModel(500, "Something went wrong when updaing isDelete roomCategory");
+            }
+            return new ResponseModel(204, "");
+        }
+
         public ResponseModel DeleteRoomCategory(int roomCategoryId)
         {
             if (!_roomCategoryRepository.IsExists(roomCategoryId)) return new ResponseModel(404, "Not found");

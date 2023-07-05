@@ -12,7 +12,8 @@ namespace CozynibiHotel.Core.Interfaces
     public interface IRoomCategoryRepository : IGenericRepository<RoomCategory>
     {
         ICollection<RoomCategoryDto> GetAll();
-        RoomCategoryDto GetById(int roomCategoryId);
+        RoomCategoryDto GetByIdDto(int roomCategoryId);
         ICollection<RoomCategoryDto> Search(string field, string keyWords);
+        bool SetDelete(int id, bool isDelete);
     }
 }

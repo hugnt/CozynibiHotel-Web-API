@@ -85,7 +85,7 @@ namespace CozynibiHotel.API.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateRoomCategory(int roomCategoryId, [FromBody] RoomCategoryDto updatedRoomCategory)
+        public async Task<IActionResult> UpdateRoomCategory(int roomCategoryId, [FromForm] RoomCategoryDto updatedRoomCategory, [FromForm] List<IFormFile> images)
         {
             if (updatedRoomCategory == null) return BadRequest(ModelState);
             if (roomCategoryId != updatedRoomCategory.Id) return BadRequest(ModelState);
@@ -96,7 +96,34 @@ namespace CozynibiHotel.API.Controllers
                 ModelState.AddModelError("", res.StatusMessage);
                 return StatusCode(res.Status, ModelState);
             }
+
+            var folderImage = "images\\accommodation_2";
+            var uploadFile = new UploadFile(_environment.WebRootPath);
+            var resUploadImage = await uploadFile.UploadImage(images, folderImage);
+
+            if (resUploadImage.Status != 200)
+            {
+                ModelState.AddModelError("", resUploadImage.StatusMessage);
+                return StatusCode(resUploadImage.Status, ModelState);
+            }
             if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            return NoContent();
+        }
+
+        [HttpPut("{roomCategoryId}/{isDelete}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateRoomCategory(int roomCategoryId, bool isDelete)
+        {
+
+            var res = _roomCategoryService.UpdateRoomCategory(roomCategoryId, isDelete);
+            if (res.Status != 204)
+            {
+                ModelState.AddModelError("", res.StatusMessage);
+                return StatusCode(res.Status, ModelState);
+            }
 
             return NoContent();
         }
