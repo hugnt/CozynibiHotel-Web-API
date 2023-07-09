@@ -3,9 +3,11 @@ using CozynibiHotel.Core.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CozynibiHotel.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CozynibiHotel.API.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : Controller
@@ -17,6 +19,8 @@ namespace CozynibiHotel.API.Controllers
             _accountService = accountService;
         }
 
+
+        [Authorize]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Account>))]
         public IActionResult GetAccounts()
@@ -27,6 +31,20 @@ namespace CozynibiHotel.API.Controllers
             return Ok(accounts);
         }
 
+        [Authorize]
+        [HttpGet("Role/{roleId}")]
+        [ProducesResponseType(200, Type = typeof(Role))]
+        [ProducesResponseType(400)]
+        public IActionResult GetRole(int roleId)
+        {
+            var role = _accountService.GetRoleById(roleId);
+            if (!ModelState.IsValid) return BadRequest();
+            if (role == null) return NotFound();
+            return Ok(role);
+        }
+
+
+        [Authorize]
         [HttpGet("{accountId}")]
         [ProducesResponseType(200, Type = typeof(Account))]
         [ProducesResponseType(400)]
@@ -37,6 +55,7 @@ namespace CozynibiHotel.API.Controllers
             if (account == null) return NotFound();
             return Ok(account);
         }
+
 
         [HttpPost]
         [ProducesResponseType(201)]
@@ -58,6 +77,7 @@ namespace CozynibiHotel.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
+        [Authorize]
         [HttpPut("{accountId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -78,6 +98,7 @@ namespace CozynibiHotel.API.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{accountId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

@@ -16,6 +16,7 @@ namespace CozynibiHotel.Infrastructure.Data
         }
 
         public DbSet<RefeshToken> RefeshTokens { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<RoomCategory> RoomCategories { get; set; }
@@ -23,6 +24,9 @@ namespace CozynibiHotel.Infrastructure.Data
         public DbSet<RoomEquipment> RoomEquipments { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<RoomGallery> RoomGalleries { get; set; }
+        public DbSet<FoodCategory> FoodCategories { get; set; }
+        public DbSet<Food> Foods { get; set; }
 
     }
 }

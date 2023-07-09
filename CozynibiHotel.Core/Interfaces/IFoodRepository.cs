@@ -9,11 +9,9 @@ using System.Threading.Tasks;
 
 namespace CozynibiHotel.Core.Interfaces
 {
-    public interface IRoomRepository : IGenericRepository<Room>
+    public interface IFoodRepository : IGenericRepository<Food>
     {
-        ICollection<RoomDto> GetAll();
-        RoomDto GetByIdDto(int roomId);
-        ICollection<RoomDto> Search(string field, string keyWords);
+        ICollection<FoodDto> Search(string field, string keyWords);
         bool SetDelete(int id, bool isDelete);
     }
 }

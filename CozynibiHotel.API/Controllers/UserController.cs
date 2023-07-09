@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CozynibiHotel.Services.Interfaces;
 using CozynibiHotel.Services.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CozynibiHotel.API.Controllers
 {
@@ -17,6 +18,14 @@ namespace CozynibiHotel.API.Controllers
         public UserController(IAccountService accountService)
         {
             _accountService = accountService;
+        }
+
+        
+        [HttpGet("VerifyToken")]
+        [Authorize]
+        public IActionResult VerifyToken()
+        {
+            return Ok("Valid Token");
         }
 
         [HttpPost("Login")]

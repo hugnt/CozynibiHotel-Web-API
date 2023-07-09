@@ -1,4 +1,5 @@
 ﻿using CozynibiHotel.Core.Dto;
+using CozynibiHotel.Core.Models;
 using CozynibiHotel.Services.Models;
 using HUG.CRUD.Services;
 using System;
@@ -18,5 +19,7 @@ namespace CozynibiHotel.Services.Interfaces
         ResponseModel DeleteAccount(int accountCategoryId);
         Task<ResponseModel> ValidateAccount(AccountDto account);
         Task<ResponseModel> RenewToken(TokenModel model);
+
+        Role GetRoleById(int roleId);
     }
 }

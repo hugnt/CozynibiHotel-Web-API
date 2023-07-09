@@ -30,6 +30,12 @@ namespace CozynibiHotel.Core.Helper
 
             CreateMap<Equipment, EquipmentDto>();
             CreateMap<EquipmentDto, Equipment>();
+
+            CreateMap<FoodCategory, FoodCategoryDto>();
+            CreateMap<FoodCategoryDto, FoodCategory>();
+
+            CreateMap<Food, FoodDto>();
+            CreateMap<FoodDto, Food>();
         }
         
     }

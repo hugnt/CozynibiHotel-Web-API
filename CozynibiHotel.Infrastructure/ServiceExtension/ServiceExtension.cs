@@ -23,6 +23,7 @@ namespace CozynibiHotel.Infrastructure.ServiceExtension
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IRefeshTokenRepository, RefeshTokenRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
@@ -30,7 +31,12 @@ namespace CozynibiHotel.Infrastructure.ServiceExtension
             services.AddScoped<IRoomImageRepository, RoomImageRepository>();
             services.AddScoped<IRoomEquipmentRepository, RoomEquipmentRepository>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IRoomGalleryRepository, RoomGalleryRepository>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+
+            services.AddScoped<IFoodCategoryRepository, FoodCategoryRepository>();
+            services.AddScoped<IFoodRepository, FoodRepository>();
+
 
             //Authenization
 

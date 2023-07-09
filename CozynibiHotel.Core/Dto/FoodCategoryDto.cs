@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace CozynibiHotel.Core.Dto
 {
-    public class RoomDto : Room
+    public class FoodCategoryDto : FoodCategory
     {
-        public List<string> Images { get; set; }
-        public RoomDto()
-        {
-            Images = new List<string>();
-        }
+        
+        
     }
 }

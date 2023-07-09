@@ -8,49 +8,49 @@ using HUG.CRUD.Services;
 
 namespace CozynibiHotel.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class RoomController : Controller
+    public class FoodController : Controller
     {
-        private readonly IRoomService _roomService;
+        private readonly IFoodService _foodService;
         private readonly IWebHostEnvironment _environment;
 
-        public RoomController(IRoomService roomService, IWebHostEnvironment environment)
+        public FoodController(IFoodService foodService, IWebHostEnvironment environment)
         {
-            _roomService = roomService;
+            _foodService = foodService;
             _environment = environment;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<Room>))]
-        public IActionResult GetRooms()
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Food>))]
+        public IActionResult GetFoods()
         {
-            var rooms = _roomService.GetRooms();
+            var foods = _foodService.GetFoods();
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            return Ok(rooms);
+            return Ok(foods);
         }
 
-        [HttpGet("{roomId}")]
-        [ProducesResponseType(200, Type = typeof(Room))]
+        [HttpGet("{foodId}")]
+        [ProducesResponseType(200, Type = typeof(Food))]
         [ProducesResponseType(400)]
-        public IActionResult GetRoom(int roomId)
+        public IActionResult GetFood(int foodId)
         {
-            var room = _roomService.GetRoom(roomId);
+            var food = _foodService.GetFood(foodId);
             if (!ModelState.IsValid) return BadRequest();
-            if (room == null) return NotFound();
-            return Ok(room);
+            if (food == null) return NotFound();
+            return Ok(food);
         }
 
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> CreateRoom([FromForm] RoomDto roomCreate, [FromForm] List<IFormFile> images)
+        public async Task<IActionResult> CreateFood([FromForm] FoodDto foodCreate, [FromForm] List<IFormFile> images)
         {
-            if (roomCreate == null) return BadRequest(ModelState);
+            if (foodCreate == null) return BadRequest(ModelState);
 
-            var res = _roomService.CreateRoom(roomCreate);
+            var res = _foodService.CreateFood(foodCreate);
 
             if (res.Status != 201)
             {
@@ -58,7 +58,7 @@ namespace CozynibiHotel.API.Controllers
                 return StatusCode(res.Status, ModelState);
             }
 
-            var folderImage = "images\\room";
+            var folderImage = "images\\menu";
             var uploadFile = new UploadFile(_environment.WebRootPath);
             var resUploadImage = await uploadFile.UploadImage(images, folderImage);
 
@@ -73,23 +73,23 @@ namespace CozynibiHotel.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
-        [HttpPut("{roomId}")]
+        [HttpPut("{foodId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateRoom(int roomId, [FromForm] RoomDto updatedRoom, [FromForm] List<IFormFile> images)
+        public async Task<IActionResult> UpdateFood(int foodId, [FromForm] FoodDto updatedFood, [FromForm] List<IFormFile> images)
         {
-            if (updatedRoom == null) return BadRequest(ModelState);
-            if (roomId != updatedRoom.Id) return BadRequest(ModelState);
+            if (updatedFood == null) return BadRequest(ModelState);
+            if (foodId != updatedFood.Id) return BadRequest(ModelState);
 
-            var res = _roomService.UpdateRoom(roomId, updatedRoom);
+            var res = _foodService.UpdateFood(foodId, updatedFood);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
                 return StatusCode(res.Status, ModelState);
             }
 
-            var folderImage = "images\\room";
+            var folderImage = "images\\menu";
             var uploadFile = new UploadFile(_environment.WebRootPath);
             var resUploadImage = await uploadFile.UploadImage(images, folderImage);
 
@@ -104,14 +104,14 @@ namespace CozynibiHotel.API.Controllers
             return NoContent();
         }
 
-        [HttpPut("{roomId}/{isDelete}")]
+        [HttpPut("{foodId}/{isDelete}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult UpdateRoom(int roomId, bool isDelete)
+        public IActionResult UpdateFood(int foodId, bool isDelete)
         {
 
-            var res = _roomService.UpdateRoom(roomId, isDelete);
+            var res = _foodService.UpdateFood(foodId, isDelete);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -122,13 +122,13 @@ namespace CozynibiHotel.API.Controllers
         }
 
 
-        [HttpDelete("{roomId}")]
+        [HttpDelete("{foodId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public IActionResult DeleteRoom(int roomId)
+        public IActionResult DeleteFood(int foodId)
         {
-            var res = _roomService.DeleteRoom(roomId);
+            var res = _foodService.DeleteFood(foodId);
             if (res.Status != 204)
             {
                 ModelState.AddModelError("", res.StatusMessage);
@@ -142,13 +142,13 @@ namespace CozynibiHotel.API.Controllers
 
 
         [HttpGet("{field}/{keyWords}")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<RoomDto>))]
-        public IActionResult SearchRoomCategories(string field, string keyWords)
+        [ProducesResponseType(200, Type = typeof(IEnumerable<FoodDto>))]
+        public IActionResult SearchFoodCategories(string field, string keyWords)
         {
-            var roomCategories = _roomService.SearchRooms(field, keyWords);
+            var foodCategories = _foodService.SearchFoods(field, keyWords);
             if (!ModelState.IsValid) return BadRequest();
-            if (roomCategories == null) return NotFound();
-            return Ok(roomCategories);
+            if (foodCategories == null) return NotFound();
+            return Ok(foodCategories);
         }
 
 

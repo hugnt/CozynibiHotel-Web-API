@@ -9,23 +9,18 @@ using System.Threading.Tasks;
 
 namespace CozynibiHotel.Core.Models
 {
-    [Table("tRoom")]
-    public class Room : BaseModel
+    [Table("tFood")]
+    public class Food : BaseModel
     {
-        [ForeignKey("tRoomCategory")]
+        [ForeignKey("tFoodCategory")]
         [Column("category_id")]
         public int CategoryId { get; set; }
         public string Name { get; set; }
-        public double? Width { get; set; }
-        public double? Height { get; set; }
-        public double? Hight { get; set; }
+        public double? Price { get; set; }
+        public string? Image { get; set; }
 
-        [Column("bed_size")]
-        public string? BedSize { get; set; }
-
-        [Column("room_rate")]
-        public double? RoomRate { get; set; }
-
+        [Column("foodRate")]
+        public double? FoodRate { get; set; }
         public string? Description { get; set; }
         
     }

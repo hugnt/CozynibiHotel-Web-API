@@ -34,7 +34,14 @@ namespace CozynibiHotel.Infrastructure.Repository
         {
             var storedToken = _dbContext.RefeshTokens.FirstOrDefault(x =>
                x.Token == refeshToken);
-            if(storedToken.IsUsed||storedToken.IsRevoked) return false;
+            if (storedToken.ExpireAt < DateTime.UtcNow) 
+            { 
+                storedToken.IsRevoked = true;
+                storedToken.IsUsed = true;
+                _dbContext.RefeshTokens.Update(storedToken);
+                return false;
+            }
+            if (storedToken.IsUsed||storedToken.IsRevoked) return false;
             return true;
         }
     }

@@ -22,20 +22,29 @@ namespace CozynibiHotel.Services.Services
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository _accountRepository;
+        private readonly IRoleRepository _roleRepository;
         private readonly IRefeshTokenRepository _refeshTokenRepository;
         private readonly IMapper _mapper;
         private readonly AppSetting _appSettings;
 
         public AccountService(IAccountRepository accountRepository, IMapper mapper
             ,IOptionsMonitor<AppSetting> optionsMonitor
-            , IRefeshTokenRepository refeshTokenRepository)
+            , IRefeshTokenRepository refeshTokenRepository
+            , IRoleRepository roleRepository
+            )
         {
             _accountRepository = accountRepository;
             _mapper = mapper;
             _appSettings = optionsMonitor.CurrentValue;
             _refeshTokenRepository = refeshTokenRepository;
+            _roleRepository = roleRepository;
         }
 
+        public Role GetRoleById(int roleId)
+        {
+            if (!_roleRepository.IsExists(roleId)) return null;
+            return _roleRepository.GetById(roleId);
+        }
         public AccountDto GetAccount(int accountId)
         {
             if (!_accountRepository.IsExists(accountId)) return null;
@@ -128,7 +137,7 @@ namespace CozynibiHotel.Services.Services
                     //roles
                 }),
 
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(secretKeyBytes),
                     SecurityAlgorithms.HmacSha256Signature)
@@ -213,7 +222,7 @@ namespace CozynibiHotel.Services.Services
                 var expireDate = ConvertUnixTimeToDateTime(utcExpireDate);
                 if(expireDate > DateTime.UtcNow)
                 {
-                    return new ResponseModel(500, "Access token has not yet expired");
+                    return new ResponseModel(200, "Access token has not yet expired",model);
                 }
 
                 //check 4: Check refeshtoken exists in db
