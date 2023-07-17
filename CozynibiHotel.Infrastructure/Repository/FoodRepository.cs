@@ -31,7 +31,7 @@ namespace CozynibiHotel.Infrastructure.Repository
                 {
                     selectedRecord.IsDeleted = isDelete;
                     selectedRecord.IsActive = false;
-                    Save();
+                    Update(selectedRecord);
                 }
 
             }
@@ -66,7 +66,7 @@ namespace CozynibiHotel.Infrastructure.Repository
             }
             if(field == "Category")
             {
-                var lstCateMatch = _dbContext.FoodCategories.ToList().Where(c => c.Name.Contains(keyWords)).Select(c => c.Id);
+                var lstCateMatch = _dbContext.FoodCategories.ToList().Where(c => c.Name.ToLower().Contains(keyWords)).Select(c => c.Id);
                 return all.Where(r => lstCateMatch.Contains(r.CategoryId)).ToList();
 
             }

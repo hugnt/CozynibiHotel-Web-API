@@ -8,7 +8,7 @@ using HUG.CRUD.Services;
 
 namespace CozynibiHotel.API.Controllers
 {
-    //[Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class FoodController : Controller
@@ -43,6 +43,7 @@ namespace CozynibiHotel.API.Controllers
             return Ok(food);
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -73,6 +74,7 @@ namespace CozynibiHotel.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
+        [Authorize]
         [HttpPut("{foodId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -104,6 +106,7 @@ namespace CozynibiHotel.API.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpPut("{foodId}/{isDelete}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -121,7 +124,7 @@ namespace CozynibiHotel.API.Controllers
             return NoContent();
         }
 
-
+        [Authorize]
         [HttpDelete("{foodId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -140,7 +143,7 @@ namespace CozynibiHotel.API.Controllers
             return NoContent();
         }
 
-
+        [Authorize]
         [HttpGet("{field}/{keyWords}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<FoodDto>))]
         public IActionResult SearchFoodCategories(string field, string keyWords)

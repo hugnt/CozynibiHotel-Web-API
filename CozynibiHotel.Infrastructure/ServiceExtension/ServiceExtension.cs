@@ -23,10 +23,15 @@ namespace CozynibiHotel.Infrastructure.ServiceExtension
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+            //ACCOUNT & TOKEN
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IRefeshTokenRepository, RefeshTokenRepository>();
+
+            //LANGUAGE
             services.AddScoped<ILanguageRepository, LanguageRepository>();
+
+            //ROOM
             services.AddScoped<IRoomCategoryRepository, RoomCategoryRepository>();
             services.AddScoped<IRoomImageRepository, RoomImageRepository>();
             services.AddScoped<IRoomEquipmentRepository, RoomEquipmentRepository>();
@@ -34,8 +39,38 @@ namespace CozynibiHotel.Infrastructure.ServiceExtension
             services.AddScoped<IRoomGalleryRepository, RoomGalleryRepository>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 
+            //FOOD
             services.AddScoped<IFoodCategoryRepository, FoodCategoryRepository>();
             services.AddScoped<IFoodRepository, FoodRepository>();
+
+            //TRAVEL
+            services.AddScoped<ITourTravelRepository, TourTravelRepository>();
+            services.AddScoped<ITourExclusionRepository, TourExclusionRepository>();
+            services.AddScoped<ITourInclusionRepository, TourInclusionRepository>();
+            services.AddScoped<ITourPriceRepository, TourPriceRepository>();
+            services.AddScoped<ITourScheduleRepository, TourScheduleRepository>();
+            services.AddScoped<ITourGalleryRepository, TourGalleryRepository>();
+            services.AddScoped<IExclusionRepository, ExclusionRepository>();
+            services.AddScoped<IInclusionRepository, InclusionRepository>();
+            services.AddScoped<IGalleryRepository, GalleryRepository>();
+
+            //SERVICE
+            services.AddScoped<IServiceRepository, ServiceRepository>();
+
+
+            //NEWS
+            services.AddScoped<INewsCategoryRepository, NewsCategoryRepository>();
+            services.AddScoped<INewsRepository, NewsRepository>();
+
+            //PAGES
+            services.AddScoped<IPageRepository, PageRepository>();
+            services.AddScoped<IPageBannerRepository, PageBannerRepository>();
+
+            //CUSTOMMER
+            services.AddScoped<ICustommerRepository, CustommerRepository>();
+
+            //ARTICLE
+            services.AddScoped<IArticleRepository, ArticleRepository>();
 
 
             //Authenization

@@ -36,6 +36,43 @@ namespace CozynibiHotel.Core.Helper
 
             CreateMap<Food, FoodDto>();
             CreateMap<FoodDto, Food>();
+
+            CreateMap<TourTravel, TourTravelDto>();
+            CreateMap<TourTravelDto, TourTravel>();
+
+
+            CreateMap<TourSchedule, TourScheduleDto>();
+            CreateMap<TourScheduleDto, TourSchedule>();
+
+            CreateMap<Gallery, GalleryDto>();
+            CreateMap<GalleryDto, Gallery>();
+
+            CreateMap<TourPrice, TourPriceDto>();
+            CreateMap<TourPriceDto, TourPrice>();
+
+            CreateMap<Inclusion, InclusionDto>();
+            CreateMap<InclusionDto, Inclusion>();
+
+            CreateMap<Exclusion, ExclusionDto>();
+            CreateMap<ExclusionDto, Exclusion>();
+
+            CreateMap<Service, ServiceDto>();
+            CreateMap<ServiceDto, Service>();
+
+            CreateMap<NewsCategory, NewsCategoryDto>();
+            CreateMap<NewsCategoryDto, NewsCategory>();
+
+            CreateMap<News, NewsDto>();
+            CreateMap<NewsDto, News>();
+
+            CreateMap<Page, PageDto>();
+            CreateMap<PageDto, Page>();
+
+            CreateMap<Custommer, CustommerDto>();
+            CreateMap<CustommerDto, Custommer>();
+
+            CreateMap<Article, ArticleDto>();
+            CreateMap<ArticleDto, Article>();
         }
         
     }

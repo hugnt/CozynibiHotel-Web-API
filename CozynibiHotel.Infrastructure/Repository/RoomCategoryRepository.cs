@@ -112,7 +112,7 @@ namespace CozynibiHotel.Infrastructure.Repository
                 {
                     selectedRecord.IsDeleted = isDelete;
                     selectedRecord.IsActive = false;
-                    Save();
+                    Update(selectedRecord);
                 }
                 
             }

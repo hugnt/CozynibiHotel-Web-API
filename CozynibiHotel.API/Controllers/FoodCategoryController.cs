@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CozynibiHotel.API.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class FoodCategoryController : Controller
@@ -53,6 +53,7 @@ namespace CozynibiHotel.API.Controllers
             return Ok(foodCategory);
         }
 
+        [Authorize]
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -83,6 +84,7 @@ namespace CozynibiHotel.API.Controllers
             return StatusCode(res.Status, res.StatusMessage);
         }
 
+        [Authorize]
         [HttpPut("{foodCategoryId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -113,6 +115,7 @@ namespace CozynibiHotel.API.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpPut("{foodCategoryId}/{isDelete}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -130,6 +133,7 @@ namespace CozynibiHotel.API.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{foodCategoryId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CozynibiHotel.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EquipmentController : Controller
