@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="MailKit" Version="4.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.4" />
+    <PackageReference Include="MimeKit" Version="4.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
@@ -16,6 +19,8 @@
     <ProjectReference Include="..\CozynibiHotel.Core\CozynibiHotel.Core.csproj" />
     <ProjectReference Include="..\CozynibiHotel.Infrastructure\CozynibiHotel.Infrastructure.csproj" />
     <ProjectReference Include="..\CozynibiHotel.Services\CozynibiHotel.Services.csproj" />
+    <ProjectReference Include="..\HUG.EmailServices\HUG.EmailServices.csproj" />
+    <ProjectReference Include="..\HUG.QRCodeServices\HUG.QRCodeServices.csproj" />
   </ItemGroup>
 
   <ItemGroup>

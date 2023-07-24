@@ -11,7 +11,10 @@ namespace CozynibiHotel.Core.Models
     [Table("tGallery")]
     public class Gallery : BaseModel
     {
-        public string Image { get; set; }
+        public string? Image { get; set; }
+
+        [Column("category_id")]
+        public int? CategoryId { get; set; }
 
     }
 }

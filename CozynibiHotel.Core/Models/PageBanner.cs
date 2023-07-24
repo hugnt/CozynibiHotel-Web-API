@@ -15,7 +15,7 @@ namespace CozynibiHotel.Core.Models
         [ForeignKey("tPage")]
         [Column("page_id")]
         public int PageId { get; set; }
-        public string Image { get; set; }
+        public string? Image { get; set; }
 
     }
 }

@@ -14,6 +14,8 @@
   <ItemGroup>
     <ProjectReference Include="..\CozynibiHotel.Core\CozynibiHotel.Core.csproj" />
     <ProjectReference Include="..\HUG.CRUD\HUG.CRUD.csproj" />
+    <ProjectReference Include="..\HUG.EmailServices\HUG.EmailServices.csproj" />
+    <ProjectReference Include="..\HUG.QRCodeServices\HUG.QRCodeServices.csproj" />
   </ItemGroup>
 
 </Project>

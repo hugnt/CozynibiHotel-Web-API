@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HUG.EmailServices", "HUG.EmailServices\HUG.EmailServices.csproj", "{C9D41585-7498-4B8B-9121-0F3DBBDF46AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HUG.QRCodeServices", "HUG.QRCodeServices\HUG.QRCodeServices.csproj", "{119CABF8-A82B-40EE-89BC-87C9C06750C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,14 @@ Global
 		{A358ED34-DD66-46BC-8800-02FC8A2F1941}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A358ED34-DD66-46BC-8800-02FC8A2F1941}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A358ED34-DD66-46BC-8800-02FC8A2F1941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9D41585-7498-4B8B-9121-0F3DBBDF46AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9D41585-7498-4B8B-9121-0F3DBBDF46AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9D41585-7498-4B8B-9121-0F3DBBDF46AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9D41585-7498-4B8B-9121-0F3DBBDF46AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{119CABF8-A82B-40EE-89BC-87C9C06750C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{119CABF8-A82B-40EE-89BC-87C9C06750C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{119CABF8-A82B-40EE-89BC-87C9C06750C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{119CABF8-A82B-40EE-89BC-87C9C06750C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

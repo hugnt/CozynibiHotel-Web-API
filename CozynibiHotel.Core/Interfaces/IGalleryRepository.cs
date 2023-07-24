@@ -11,6 +11,7 @@ namespace CozynibiHotel.Core.Interfaces
 {
     public interface IGalleryRepository : IGenericRepository<Gallery>
     {
-     
+        ICollection<GalleryDto> Search(string field, string keyWords);
+        bool SetDelete(int id, bool isDelete);
     }
 }

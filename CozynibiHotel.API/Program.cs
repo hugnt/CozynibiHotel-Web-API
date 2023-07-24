@@ -2,6 +2,12 @@ using CozynibiHotel.Infrastructure.ServiceExtension;
 using CozynibiHotel.Core.Helper;
 using CozynibiHotel.Services.Interfaces;
 using CozynibiHotel.Services.Services;
+using CozynibiHotel.API.Hub;
+using CozynibiHotel.API.Models;
+
+using HUG.EmailServices.Models;
+using HUG.EmailServices.Services;
+using HUG.QRCodeServices.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,9 +51,37 @@ builder.Services.AddScoped<ICustommerService, CustommerService>();
 //ARTICLE
 builder.Services.AddScoped<IArticleService, ArticleService>();
 
+//GALLERY
+builder.Services.AddScoped<IGalleryService, GalleryService>();
+
+//INFORMATION
+builder.Services.AddScoped<IInformationService, InformationService>();
+
+//CONTACT
+builder.Services.AddScoped<IContactService, ContactService>();
+
+//BOOKING
+builder.Services.AddScoped<IBookingService, BookingService>();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+//SignalR
+builder.Services.AddSignalR();
+
+//Email
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+
+
+
+
+
+
+
+builder.Services.AddControllers();
 
 //Enable CORS
 builder.Services.AddCors(p =>
@@ -59,8 +93,9 @@ builder.Services.AddCors(p =>
                           "http://localhost:5289",
                           "http://localhost:3000")
              .AllowAnyMethod()
-             .AllowAnyHeader();
-
+             .AllowAnyHeader()
+            .AllowCredentials()
+            .SetIsOriginAllowed((hosts) => true);
         //build.WithOrigins("*")
         //     .AllowAnyMethod()
         //     .AllowAnyHeader();
@@ -82,9 +117,17 @@ app.UseCors("HUG_LOCAL");
 
 app.UseStaticFiles();// Add middleware for specify the static files in wwwroot
 
+app.UseRouting();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+
+app.UseEndpoints(endpoints => {
+    endpoints.MapControllers();
+    endpoints.MapHub<MessageHub>("/hub");
+});
 
 app.MapControllers();
 

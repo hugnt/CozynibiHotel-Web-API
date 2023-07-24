@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using HUG.EmailServices.Services;
+using HUG.QRCodeServices.Services;
 
 namespace CozynibiHotel.Infrastructure.ServiceExtension
 {
@@ -53,6 +55,7 @@ namespace CozynibiHotel.Infrastructure.ServiceExtension
             services.AddScoped<IExclusionRepository, ExclusionRepository>();
             services.AddScoped<IInclusionRepository, InclusionRepository>();
             services.AddScoped<IGalleryRepository, GalleryRepository>();
+            services.AddScoped<IGalleryCategoryRepository, GalleryCategoryRepository>();
 
             //SERVICE
             services.AddScoped<IServiceRepository, ServiceRepository>();
@@ -72,11 +75,23 @@ namespace CozynibiHotel.Infrastructure.ServiceExtension
             //ARTICLE
             services.AddScoped<IArticleRepository, ArticleRepository>();
 
+            //INFORMATION
+            services.AddScoped<IInformationRepository, InformationRepository>();
+
+            //CONTACT
+            services.AddScoped<IContactRepository, ContactRepository>();
+
+            //BOOKING
+            services.AddScoped<IBookingRepository, BookingRepository>();
+
+            services.AddTransient<IEmailService, EmailService>();
 
             //Authenization
 
             //Khai baos Appsetting map voweis cais  gif, cho pheps copy
-            services.Configure<AppSetting>(configuration.GetSection("AppSettings")); 
+            services.Configure<AppSetting>(configuration.GetSection("AppSettings"));
+            //QR
+            services.AddScoped<IQRCodeService, QRCodeService>();
 
             var secretKey = configuration["AppSettings:SecretKey"];
             var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);

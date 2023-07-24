@@ -42,6 +42,7 @@ namespace CozynibiHotel.Infrastructure.Data
         public DbSet<Exclusion> Exclusions { get; set; }
         public DbSet<Inclusion> Inclusions { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
+        public DbSet<GalleryCategory> GalleryCategories { get; set; }
 
         //Service
         public DbSet<Service> Services { get; set; }
@@ -59,6 +60,15 @@ namespace CozynibiHotel.Infrastructure.Data
 
         //Article
         public DbSet<Article> Articles { get; set; }
+
+        //Information
+        public DbSet<Information> Informations { get; set; }
+
+        //Contact
+        public DbSet<Contact> Contacts { get; set; }
+
+        //Booking
+        public DbSet<Booking> Bookings { get; set; }
 
     }
 }

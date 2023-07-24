@@ -73,6 +73,21 @@ namespace CozynibiHotel.Core.Helper
 
             CreateMap<Article, ArticleDto>();
             CreateMap<ArticleDto, Article>();
+
+            CreateMap<Gallery, GalleryDto>();
+            CreateMap<GalleryDto, Gallery>();
+
+            CreateMap<GalleryCategory, GalleryCategoryDto>();
+            CreateMap<GalleryCategoryDto, GalleryCategory>();
+
+            CreateMap<Information, InformationDto>();
+            CreateMap<InformationDto, Information>();
+
+            CreateMap<Contact, ContactDto>();
+            CreateMap<ContactDto, Contact>();
+
+            CreateMap<Booking, BookingDto>();
+            CreateMap<BookingDto, Booking>();
         }
         
     }

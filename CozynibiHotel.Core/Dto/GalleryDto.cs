@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace CozynibiHotel.Core.Dto
 {
-    public class GalleryDto
+    public class GalleryDto : Gallery
     {
-        public string Name { get; set; }
+      
     }
 }

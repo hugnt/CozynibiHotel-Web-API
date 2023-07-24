@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using CozynibiHotel.Services.Interfaces;
 using HUG.CRUD.Services;
 using Microsoft.AspNetCore.Authorization;
+using CozynibiHotel.API.Hub;
+using Microsoft.AspNetCore.SignalR;
 
 namespace CozynibiHotel.API.Controllers
 {
@@ -14,8 +16,10 @@ namespace CozynibiHotel.API.Controllers
     {
         private readonly IRoomCategoryService _roomCategoryService;
         private readonly IWebHostEnvironment _environment;
+        
 
-        public RoomCategoryController(IRoomCategoryService roomCategoryService, IWebHostEnvironment environment)
+        public RoomCategoryController(IRoomCategoryService roomCategoryService, 
+                                      IWebHostEnvironment environment)
         {
             _roomCategoryService = roomCategoryService;
             _environment = environment;
@@ -27,7 +31,6 @@ namespace CozynibiHotel.API.Controllers
         {
             var roomCategories = _roomCategoryService.GetRoomCategories();
             if (!ModelState.IsValid) return BadRequest(ModelState);
-
             return Ok(roomCategories);
         }
 
