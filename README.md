@@ -2,22 +2,22 @@ CozynibiHotel - WEB API
 
 This is ASP.NET CORE 6 WEB API using Generic Repository Pattern and Unit of work
 
-I. Technologies:
+# I.Technologies:
     - Language: C#
     - Framework: ASP.NET CORE 6 WEB API, Entity Framework
     - Database: SQL Server
 
-II. Extension Libraries
+# II.Extension Libraries
     - MailKit, MimeKit
     - QRCoder
     - Auto Mapper
     - Microsoft.AspNetCore.Authentication.JwtBearer
     - Microsoft.AspNetCore.SignalR
 
-III. System Libraries
+# III. System Libraries
     - JWT (System.IdentityModel.Tokens.Jwt)
 
-IV. Details
+# IV. Solution details
 1. Solution structure
 - This have 7 project files: 
     + 1 Main API Project (API)
@@ -73,7 +73,7 @@ IV. Details
         + The money earning from foods
         + Number of custommer
         + Rating rooms
-4. How to use?
+# V. How to use?
     - This solution is only includes API, you can test them in POST MAN, Or for having a great travel, please see and clone the ADMIN TEMPLATE of this project in: https://github.com/hugnt/CozynibiHotel-Admin-ASP.NET-CORE-MVC-6.0
     (Please read the instruction in that project to clone and using)
 
@@ -104,7 +104,7 @@ IV. Details
     - STEP 3: Setting start up project is CozinibiHotel.API and RUN
     - STEP 4: Open POST MAN for testing or open Admin template and using
 
-5. References and link
+# VI. References and link
     - Set up and take the google email password for access ASP.NET can be sent email:
         + enable app password: https://nchuyvn.com/s%E1%BA%A3n%20ph%E1%BA%A9m/cach-tao-app-password-cho-smtp-gmail/
         + using in ASP.NET CORE: https://www.youtube.com/watch?v=0e325O9mzP8
