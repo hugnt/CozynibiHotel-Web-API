@@ -25,6 +25,9 @@ namespace CozynibiHotel.Core.Models
         public string? Image { get; set; }
         public string? Country { get; set; }
 
+        [Column("checkin_code")]
+        public int? CheckInCode { get; set; }
+
 
     }
 }

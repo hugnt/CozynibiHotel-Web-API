@@ -50,7 +50,7 @@ namespace CozynibiHotel.Infrastructure.Repository
                 var selectedRecord = _dbContext.Bookings.Find(id);
                 if (selectedRecord != null)
                 { 
-                    selectedRecord.IsActive = status;
+                    selectedRecord.IsSuccess = status;
                     Update(selectedRecord);
                 }
 

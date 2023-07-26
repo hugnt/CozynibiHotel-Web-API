@@ -44,6 +44,8 @@ namespace CozynibiHotel.Infrastructure.ServiceExtension
             //FOOD
             services.AddScoped<IFoodCategoryRepository, FoodCategoryRepository>();
             services.AddScoped<IFoodRepository, FoodRepository>();
+            services.AddScoped<IFoodOrderRepository, FoodOrderRepository>();
+            services.AddScoped<IFoodOrderDetailsRepository, FoodOrderDetailsRepository>();
 
             //TRAVEL
             services.AddScoped<ITourTravelRepository, TourTravelRepository>();

@@ -29,6 +29,7 @@ builder.Services.AddScoped<IEquipmentService, EquipmentService>();
 //Foods
 builder.Services.AddScoped<IFoodCategoryService, FoodCategoryService>();
 builder.Services.AddScoped<IFoodService, FoodService>();
+builder.Services.AddScoped<IFoodOrderService, FoodOrderService>();
 
 //Tour Travel
 builder.Services.AddScoped<ITourTravelService, TourTravelService>();

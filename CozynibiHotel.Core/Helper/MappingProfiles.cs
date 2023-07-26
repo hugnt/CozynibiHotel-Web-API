@@ -88,6 +88,10 @@ namespace CozynibiHotel.Core.Helper
 
             CreateMap<Booking, BookingDto>();
             CreateMap<BookingDto, Booking>();
+
+            CreateMap<FoodOrder, FoodOrderDto>();
+            CreateMap<FoodOrderDto, FoodOrder>();
+
         }
         
     }

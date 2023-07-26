@@ -136,7 +136,7 @@ namespace CozynibiHotel.API.Controllers
         }
 
         [Authorize]
-        [HttpPut("{bookingId}/Status/{status}")]
+        [HttpPut("{bookingId}/TakeRoom/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

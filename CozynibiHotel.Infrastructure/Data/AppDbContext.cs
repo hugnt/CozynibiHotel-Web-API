@@ -31,6 +31,8 @@ namespace CozynibiHotel.Infrastructure.Data
         //Food
         public DbSet<FoodCategory> FoodCategories { get; set; }
         public DbSet<Food> Foods { get; set; }
+        public DbSet<FoodOrder> FoodOrders { get; set; }
+        public DbSet<FoodOrderDetails> FoodOrderDetails { get; set; }
 
         //Tour Travel
         public DbSet<TourTravel> TourTravels { get; set; }
@@ -69,6 +71,7 @@ namespace CozynibiHotel.Infrastructure.Data
 
         //Booking
         public DbSet<Booking> Bookings { get; set; }
+
 
     }
 }
