@@ -63,7 +63,7 @@ This is ASP.NET CORE 6 WEB API using Generic Repository Pattern and Unit of work
     + QRCoder, to hash a string to QR
     + to QR code is stronger we will using JWT again to generate the code includes object of information so when a device 
     scan the code will be a token, you have to scan it and having secrete key then the infor will be seen.
-    ![image](https://github.com/hugnt/CozynibiHotel-Admin-ASP.NET-CORE-MVC-6.0/assets/103843426/81983a4b-5ef2-42be-8ef3-1bda30c1f931)
+    ![image](https://github.com/hugnt/CozynibiHotel-Admin-ASP.NET-CORE-MVC-6.0/README/qr.jpg)
 - Export Bill 
     + Export to pdf, words, ...
 
