@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using CozynibiHotel.Services.Interfaces;
 using HUG.CRUD.Services;
 using Microsoft.AspNetCore.Authorization;
+using CozynibiHotel.API.Hub;
+using Microsoft.AspNetCore.SignalR;
 
 namespace CozynibiHotel.API.Controllers
 {
@@ -15,11 +17,15 @@ namespace CozynibiHotel.API.Controllers
     {
         private readonly IFoodOrderService _foodOrderService;
         private readonly IWebHostEnvironment _environment;
+        private IHubContext<MessageHub, IMessageHubClient> _messageHub;
 
-        public FoodOrderController(IFoodOrderService foodOrderService, IWebHostEnvironment environment)
+        public FoodOrderController(IFoodOrderService foodOrderService
+                                  ,IWebHostEnvironment environment
+                                  ,IHubContext<MessageHub, IMessageHubClient> messageHub)
         {
             _foodOrderService = foodOrderService;
             _environment = environment;
+            _messageHub = messageHub;
         }
 
         [Authorize]
@@ -55,6 +61,20 @@ namespace CozynibiHotel.API.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("CheckInCode/{checkInCode}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        public IActionResult TryCheckInCode(string checkInCode)
+        {
+            var checkInCode_int = int.Parse(checkInCode);
+            if (!ModelState.IsValid) return BadRequest();
+            var isValidCode = _foodOrderService.IsValidCheckInCode(checkInCode_int);
+            if (!ModelState.IsValid) return BadRequest();
+            if (isValidCode == false) return NotFound();
+            return Ok(isValidCode);
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
@@ -69,7 +89,7 @@ namespace CozynibiHotel.API.Controllers
                 ModelState.AddModelError("", res.StatusMessage);
                 return StatusCode(res.Status, ModelState);
             }
-
+            _messageHub.Clients.All.SendNotificationFoodOrder(foodOrderCreate);
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             return StatusCode(res.Status, res.StatusMessage);
@@ -135,7 +155,7 @@ namespace CozynibiHotel.API.Controllers
         }
 
         [Authorize]
-        [HttpPut("{contactId}/Status/{status}")]
+        [HttpPut("{foodOrderId}/Status/{status}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]

@@ -86,6 +86,7 @@ namespace CozynibiHotel.Infrastructure.ServiceExtension
             //BOOKING
             services.AddScoped<IBookingRepository, BookingRepository>();
 
+            //EMAIL
             services.AddTransient<IEmailService, EmailService>();
 
             //Authenization

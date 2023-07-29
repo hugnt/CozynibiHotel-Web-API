@@ -13,6 +13,7 @@
     <PackageReference Include="MimeKit" Version="4.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Twilio" Version="6.10.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +22,7 @@
     <ProjectReference Include="..\CozynibiHotel.Services\CozynibiHotel.Services.csproj" />
     <ProjectReference Include="..\HUG.EmailServices\HUG.EmailServices.csproj" />
     <ProjectReference Include="..\HUG.QRCodeServices\HUG.QRCodeServices.csproj" />
+    <ProjectReference Include="..\HUG.SMS\HUG.SMS.csproj" />
   </ItemGroup>
 
   <ItemGroup>

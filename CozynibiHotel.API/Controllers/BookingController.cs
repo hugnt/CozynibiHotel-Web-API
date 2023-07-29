@@ -14,7 +14,7 @@ using Microsoft.Extensions.Options;
 using CozynibiHotel.API.Models;
 using HUG.QRCodeServices.Models;
 
-namespace CozynibiHotel.API.Controllers
+namespace CozynibiHotel.API.Controllers 
 {
     
     [Route("api/[controller]")]

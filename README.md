@@ -38,8 +38,9 @@ This is ASP.NET CORE 6 WEB API using Generic Repository Pattern and Unit of work
     + HUG.EmailServices: has method to send emails to clients
     + HUG.QRCodeServices: has QR services contains generate QR code by an input, ..
     --> These 3 class libraries are independent module means CAN BE USED IN MANY OTHER PROJECT
-
-2. Base Services 
+3. Set up
+    - In Program file: set up CORS allow some host to access and using the resources
+4. Base Services 
     - CRUD (Create, Read, Update, Delete)
     - Upload File, images, ..
     - Communicating with DB with these relationships between these entities: 
@@ -47,7 +48,7 @@ This is ASP.NET CORE 6 WEB API using Generic Repository Pattern and Unit of work
         + One - to - Many (1: N)
         + Many- to - many (N:N) 
 
-3. What makes this project special ?
+5. What makes this project special ?
     - Security: 
         + Authentication: (ACCESS TOKEN and REFESH TOKEN)
         --> using JWT to create a access token with a secret key
@@ -55,16 +56,25 @@ This is ASP.NET CORE 6 WEB API using Generic Repository Pattern and Unit of work
         --> provide refesh token to keep user in using in a long time and access token can be change
         + Authorize: 
 
+    - RealTime:
+        + Websocket SignalR: whenever client send a form(request), admin will immediately see the notifications
+        + Create a tunnel call "/hub", this the middle connection between server and client 
+    
     - Sending Email:
         + MailKit and MimeKit, to create a request to Google server at port 587 or 465 in smtp server, that allow us to
         send email to other with the content and template we want. In this project Checkin_code and QR wwill be sent when
         confirm booking
+
+    - Sending SMS:
+        + Twilio provides a virtual number and free version that help us can send sms to other phone number, in this project 
+        this service is for confirm with the custommers
 
     - QR Create and Verify
         + QRCoder, to hash a string to QR
         + to QR code is stronger we will using JWT again to generate the code includes object of information so when a device 
         scan the code will be a token, you have to scan it and having secrete key then the infor will be seen.
         ![qr](https://github.com/hugnt/CozynibiHotel-Web-API/assets/103843426/e9149fca-726a-4014-9a0e-ff4c4ff3c7a1)
+        
     - Export Bill 
         + Export to pdf, words, ...
 

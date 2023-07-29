@@ -17,6 +17,10 @@ namespace CozynibiHotel.API.Hub
         {
             await Clients.All.SendNotificationBooking(booking);
         }
+        public async Task SendNotificationFoodOrder(FoodOrderDto foodOrder)
+        {
+            await Clients.All.SendNotificationFoodOrder(foodOrder);
+        }
 
     }
 }

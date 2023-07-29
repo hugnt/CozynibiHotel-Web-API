@@ -17,15 +17,17 @@ namespace CozynibiHotel.Services.Services
         private readonly IFoodOrderRepository _foodOrderRepository;
         private readonly IMapper _mapper;
         private readonly IFoodOrderDetailsRepository _foodOrderDetailsRepository;
-
+        private readonly ICustommerRepository _custommerRepository;
 
         public FoodOrderService(IFoodOrderRepository foodOrderRepository, 
                                 IMapper mapper,
-                                IFoodOrderDetailsRepository foodOrderDetailsRepository)
+                                IFoodOrderDetailsRepository foodOrderDetailsRepository,
+                                ICustommerRepository custommerRepository)
         {
             _foodOrderRepository = foodOrderRepository;
             _mapper = mapper;
             _foodOrderDetailsRepository = foodOrderDetailsRepository;
+            _custommerRepository = custommerRepository;
         }
 
         public FoodOrderDto GetFoodOrder(int foodOrderId)
@@ -163,6 +165,7 @@ namespace CozynibiHotel.Services.Services
             {
                 return new ResponseModel(500, "Something went wrong when updaing status FoodOrder");
             }
+            
             return new ResponseModel(204, "");
         }
 
@@ -182,6 +185,13 @@ namespace CozynibiHotel.Services.Services
         {
             var res = _foodOrderRepository.Search(field, keyWords);
             return res;
+        }
+
+        public bool IsValidCheckInCode(int checkInCode)
+        {
+            var custommerByCheckinCode = _custommerRepository.GetAll().FirstOrDefault(x => x.IsActive == true&&x.CheckInCode == checkInCode);
+            if (custommerByCheckinCode == null) return false;
+            return true;
         }
     }
 }

@@ -8,6 +8,8 @@ using CozynibiHotel.API.Models;
 using HUG.EmailServices.Models;
 using HUG.EmailServices.Services;
 using HUG.QRCodeServices.Services;
+using HUG.SMS.Models;
+using HUG.SMS.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,11 +78,9 @@ builder.Services.AddSignalR();
 //Email
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
-
-
-
-
-
+//SMS
+builder.Services.Configure<TwilioSettings>(builder.Configuration.GetSection("TwilioSettings"));
+builder.Services.AddTransient<ISMSService, SMSService>();
 
 builder.Services.AddControllers();
 

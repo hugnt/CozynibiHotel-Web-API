@@ -18,6 +18,7 @@ namespace CozynibiHotel.Services.Interfaces
         ResponseModel UpdateFoodOrder(int foodOrderId, bool isDelete);
         ResponseModel UpdateFoodOrderStatus(int foodOrderId, bool status);
         ResponseModel DeleteFoodOrder(int foodOrderId);
+        bool IsValidCheckInCode(int checkInCode);
 
     }
 }

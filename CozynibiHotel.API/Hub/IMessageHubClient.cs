@@ -7,5 +7,6 @@ namespace CozynibiHotel.API.Hub
         Task SendOffersToUser(List<string> message);
         Task SendNotificationToUser(ContactDto contact);
         Task SendNotificationBooking(BookingDto booking);
+        Task SendNotificationFoodOrder(FoodOrderDto foodOrder);
     }
 }
